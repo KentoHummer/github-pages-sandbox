@@ -1,0 +1,36 @@
+# プッシュ時の差分ファイルをエクスポートする
+name: Export Changed Files
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  export-changes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install zip
+        run: sudo apt-get install zip
+
+      - name: Get Revision Number and Date
+        id: get_info
+        run: |
+          echo "::set-output name=revision::$(git rev-parse HEAD)"
+          echo "::set-output name=date::$(date +'%Y%m%d-%H%M%S')"
+
+      - name: Find and Zip Changed Files
+        run: |
+          FILENAME=changes_${{ steps.get_info.outputs.date }}_${{ steps.get_info.outputs.revision }}.zip
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }} | zip $FILENAME -@
+          ls -l
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: changed-files
+          path: changes_${{ steps.get_info.outputs.date }}_${{ steps.get_info.outputs.revision }}.zip
