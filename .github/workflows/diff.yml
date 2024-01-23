@@ -25,13 +25,21 @@ jobs:
           echo "::set-output name=revision::$(git rev-parse HEAD)"
           echo "::set-output name=date::$(date +'%Y%m%d-%H%M%S')"
 
-      - name: Find and Zip Changed Files
+      - name: Find Changed Files
+        id: find_changed_files
+        run: |
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          echo "::set-output name=changed_files::$CHANGED_FILES"
+
+      - name: Zip Changed Files
+        if: steps.find_changed_files.outputs.changed_files != ''
         run: |
           FILENAME=changes_${{ steps.get_info.outputs.date }}_${{ steps.get_info.outputs.revision }}.zip
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }} | zip $FILENAME -@
+          zip $FILENAME ${{ steps.find_changed_files.outputs.changed_files }}
           ls -l
 
       - name: Upload Artifacts
+        if: steps.find_changed_files.outputs.changed_files != ''
         uses: actions/upload-artifact@v3
         with:
           name: changed-files
