@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/github-pages-sandbox/', // <- これを追加しないとGitHubPagesで正常に表示されない
   title: "GitHubPages sandbox",
   description: "It is a GitHubPages sandbox Site",
   themeConfig: {
