@@ -4,6 +4,6 @@
 # Node.jsのモジュール類は無視
 node_modules
 
-# vitepressのcacheは無視
-# docs/.vitepress/cache
-# docs/.vitepress/dist
+# vitepressのワークスペース関連は無視
+docs/.vitepress/cache
+docs/.vitepress/dist
