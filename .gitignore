@@ -6,4 +6,3 @@ node_modules
 
 # vitepressのワークスペース関連は無視
 docs/.vitepress/cache
-docs/.vitepress/dist
