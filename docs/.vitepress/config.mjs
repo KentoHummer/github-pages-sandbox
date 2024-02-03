@@ -2,7 +2,8 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/github-pages-sandbox/', // <- これを追加しないとGitHubPagesで正常に表示されない
+  lang: 'ja',
+  base: '/github-pages-sandbox/',   // <- これを追加しないとGitHubPagesで正常に表示されない
   title: "GitHubPages sandbox",
   description: "It is a GitHubPages sandbox Site",
   themeConfig: {
@@ -17,7 +18,8 @@ export default defineConfig({
         text: 'Examples',
         items: [
           { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          { text: 'Runtime API Examples', link: '/api-examples' },
+          { text: 'test', link: '/test' }
         ]
       }
     ],
